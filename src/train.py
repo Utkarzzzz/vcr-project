@@ -42,12 +42,14 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--train", default="data/train", help="feature prefix")
     p.add_argument("--out", default="models")
+    p.add_argument("--stages", nargs="+", default=["answer", "rationale"],
+                   choices=["answer", "rationale"])
     args = p.parse_args()
 
     import os
     os.makedirs(args.out, exist_ok=True)
 
-    for stage in ["answer", "rationale"]:
+    for stage in args.stages:
         clf = train_stage(args.train, stage)
         dump(clf, f"{args.out}/{stage}_clf.joblib")
         print(f"saved {args.out}/{stage}_clf.joblib")

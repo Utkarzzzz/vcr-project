@@ -13,12 +13,15 @@ class ClipEncoder:
         self.processor = CLIPProcessor.from_pretrained(MODEL_NAME)
 
     @torch.no_grad()
-    def encode_image(self, image_path):
-        img = Image.open(image_path).convert("RGB")
+    def encode_pil(self, img):
+        img = img.convert("RGB")
         inputs = self.processor(images=img, return_tensors="pt").to(self.device)
         feat = self.model.get_image_features(**inputs).pooler_output
         feat = feat / feat.norm(dim=-1, keepdim=True)
         return feat.squeeze(0).cpu().numpy()
+
+    def encode_image(self, image_path):
+        return self.encode_pil(Image.open(image_path))
 
     @torch.no_grad()
     def encode_texts(self, texts):

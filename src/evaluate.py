@@ -31,27 +31,30 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--features", default="data/val", help="feature prefix")
     p.add_argument("--models", default="models")
+    p.add_argument("--answer-only", action="store_true",
+                   help="report only Q->A (for the rationale-less HF mirror)")
     args = p.parse_args()
 
     ans_clf = load(f"{args.models}/answer_clf.joblib")
-    rat_clf = load(f"{args.models}/rationale_clf.joblib")
-
     aX, ay, ag = load_stage(args.features, "answer")
-    rX, ry, rg = load_stage(args.features, "rationale")
-
     a_pred, _ = predict_choices(ans_clf, aX, ag)
-    r_pred, _ = predict_choices(rat_clf, rX, rg)
     a_true = correct_index(ay, ag)
+    groups = sorted(a_true.keys())
+
+    q2a = np.mean([a_pred[g] == a_true[g] for g in groups])
+    print(f"Q -> A   accuracy: {q2a:.4f}")
+    if args.answer_only:
+        return
+
+    rat_clf = load(f"{args.models}/rationale_clf.joblib")
+    rX, ry, rg = load_stage(args.features, "rationale")
+    r_pred, _ = predict_choices(rat_clf, rX, rg)
     r_true = correct_index(ry, rg)
 
-    groups = sorted(a_true.keys())
-    q2a = np.mean([a_pred[g] == a_true[g] for g in groups])
     qa2r = np.mean([r_pred[g] == r_true[g] for g in groups])
     q2ar = np.mean(
         [(a_pred[g] == a_true[g]) and (r_pred[g] == r_true[g]) for g in groups]
     )
-
-    print(f"Q -> A   accuracy: {q2a:.4f}")
     print(f"QA -> R  accuracy: {qa2r:.4f}")
     print(f"Q -> AR  accuracy: {q2ar:.4f}   <- primary metric")
 
