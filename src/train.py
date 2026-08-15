@@ -28,7 +28,6 @@ def group_accuracy(clf, X, y, group):
 
 def train_stage(prefix, stage):
     X, y, group = load(prefix, stage)
-    # class_weight balanced because only 1 of every 4 rows is positive
     clf = LogisticRegression(max_iter=2000, C=1.0, class_weight="balanced")
     clf.fit(X, y)
     acc, _ = group_accuracy(clf, X, y, group)
