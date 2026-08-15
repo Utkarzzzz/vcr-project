@@ -25,8 +25,6 @@ class ClipEncoder:
 
     @torch.no_grad()
     def encode_texts(self, texts):
-        # CLIP's text encoder caps at 77 tokens; long rationales get cut,
-        # which is a known limitation of this simple approach.
         inputs = self.processor(
             text=texts,
             return_tensors="pt",
@@ -40,8 +38,5 @@ class ClipEncoder:
 
 
 def pair_features(img_vec, txt_vec):
-    # Given a normalized image vector and text vector, build one feature
-    # row the classifier can learn from. The element-wise product and the
-    # cosine similarity are what let a linear model judge "do these match".
     cos = float(np.dot(img_vec, txt_vec))
     return np.concatenate([img_vec, txt_vec, img_vec * txt_vec, [cos]])
