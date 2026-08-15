@@ -11,8 +11,8 @@ def load_stage(prefix, stage):
 
 def predict_choices(clf, X, group):
     scores = clf.predict_proba(X)[:, 1]
-    chosen = {}   # group -> local index chosen
-    correct = {}  # group -> local index of the correct candidate
+    chosen = {}  
+    correct = {} 
     for gi in np.unique(group):
         idx = np.where(group == gi)[0]
         chosen[int(gi)] = int(np.argmax(scores[idx]))
