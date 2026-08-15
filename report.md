@@ -72,11 +72,21 @@ image ─► CLIP image encoder ─┐
 
 | Metric | Accuracy | Random baseline |
 |--------|----------|-----------------|
-| Q→A    | `[[ .. ]]` | 25% |
-| QA→R   | `[[ .. ]]` | 25% |
-| **Q→AR (primary)** | `[[ .. ]]` | ~6.25% |
+| Q→A    | **44.0%** | 25% |
+| QA→R   | pending¹ | 25% |
+| **Q→AR (primary)** | pending¹ | ~6.25% |
 
-Validation samples used: `[[ N ]]`. Encoder: CLIP ViT-B/32. Hardware: `[[ CPU/GPU ]]`.
+Validation samples used: 500 (subset). Training samples: 1,500 (subset).
+Encoder: CLIP ViT-B/32 (frozen). Head: logistic regression. Hardware: Colab T4 GPU.
+
+¹ The official VCR host (visualcommonsense.com → AWS S3) is currently returning
+`AccessDenied`, so the rationale annotations were unavailable at submission time.
+I validated the full two-stage pipeline on synthetic data and ran Stage 1 (Q→A)
+on real images via the `pingzhili/vcr-qa` Hugging Face mirror, which contains
+answers but not rationales. Stage 2 uses identical code and will run as soon as
+the rationale data is accessible. Q→A of 44% is well above the 25% random floor;
+accuracy is expected to rise with more training samples (this run used only
+1,500 of ~213k).
 
 ## 5. Key design choices & trade-offs
 
