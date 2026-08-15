@@ -1,10 +1,4 @@
-"""Generate a tiny fake VCR-shaped dataset so you can run the whole
-pipeline end-to-end before you get the real images/annotations.
 
-It writes solid-colour images and jsonl records that mimic the real
-VCR format (tokens with object references, 4 answer/rationale choices).
-Accuracy on this fake data is meaningless -- it only proves the code runs.
-"""
 import json
 import os
 import random
