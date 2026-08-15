@@ -1,0 +1,15 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# data & artifacts (too big / regenerated)
+data/*.jsonl
+data/vcr1images/
+data/*.npz
+models/
+predictions.json
+
+# keep the data folder in the repo but not its contents
+!data/.gitkeep
