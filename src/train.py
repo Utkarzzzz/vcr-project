@@ -11,8 +11,6 @@ def load(prefix, stage):
 
 
 def group_accuracy(clf, X, y, group):
-    # score every candidate, then check whether the highest-scoring
-    # candidate in each group is the correct one
     scores = clf.predict_proba(X)[:, 1]
     correct = 0
     total = 0
