@@ -9,11 +9,6 @@ from vcr_data import load_split
 
 
 def build(samples, encoder):
-    # We produce two feature tables:
-    #   answer stage  -> 4 rows per sample (one per candidate answer)
-    #   rationale stage -> 4 rows per sample (one per candidate rationale)
-    # "group" tells us which rows belong to the same sample so we can pick
-    # an argmax within each group at evaluation time.
     ans = {"X": [], "y": [], "group": []}
     rat = {"X": [], "y": [], "group": []}
 
