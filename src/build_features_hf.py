@@ -1,10 +1,4 @@
-"""Build answer-stage features from the Hugging Face VCR mirror
-(pingzhili/vcr-qa) instead of the official zip.
 
-This mirror streams the real VCR images + questions + 4 answers + answer
-label, so we can get genuine Q->A numbers without the 30 GB download. It has
-no rationales, so only the answer stage is produced here.
-"""
 import argparse
 
 import numpy as np
