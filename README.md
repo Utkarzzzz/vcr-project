@@ -62,9 +62,3 @@ Accuracy on the fake data is random — this run only proves the plumbing works.
 The real val set should land somewhere around 55–65% Q→A with this baseline —
 well above the 25% random floor, and a solid, defensible starting point.
 
-## Where to take it next (for extra marks)
-
-- Swap `openai/clip-vit-base-patch32` for `openai/clip-vit-large-patch14`.
-- Replace `LogisticRegression` with a small PyTorch MLP (2 layers).
-- Use the object tags/bounding boxes instead of throwing them away.
-- Try a stronger model (BLIP-2, LLaVA) for the encoder — same overall shape.
