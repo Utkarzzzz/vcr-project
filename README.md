@@ -1,9 +1,8 @@
-# Visual Commonsense Reasoning — beginner build
+# Visual Commonsense Reasoning 
 
 A small, honest baseline for the VCR task (answer selection + rationale
 selection). It leans on a pretrained CLIP model for the "seeing and reading"
-part and a plain logistic-regression classifier for the "choosing" part — so
-if you already know scikit-learn, most of this will feel familiar.
+part and a plain logistic-regression classifier for the "choosing" part.
 
 ## The idea in one paragraph
 
