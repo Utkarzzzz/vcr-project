@@ -54,9 +54,13 @@ def main():
     p.add_argument("--jsonl", required=True)
     p.add_argument("--images", default="data/vcr1images")
     p.add_argument("--out", required=True, help="prefix, e.g. data/val")
+    p.add_argument("--limit", type=int, default=0,
+                   help="only use the first N samples (0 = all)")
     args = p.parse_args()
 
     samples = load_split(args.jsonl, args.images)
+    if args.limit:
+        samples = samples[: args.limit]
     print(f"{len(samples)} samples from {args.jsonl}")
 
     encoder = ClipEncoder()

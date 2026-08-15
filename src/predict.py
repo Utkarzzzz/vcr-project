@@ -19,6 +19,8 @@ def main():
     p.add_argument("--images", default="data/vcr1images")
     p.add_argument("--models", default="models")
     p.add_argument("--out", default="predictions.json")
+    p.add_argument("--limit", type=int, default=0,
+                   help="only predict on the first N samples (0 = all)")
     args = p.parse_args()
 
     ans_clf = load(f"{args.models}/answer_clf.joblib")
@@ -26,6 +28,8 @@ def main():
     enc = ClipEncoder()
 
     samples = load_split(args.jsonl, args.images)
+    if args.limit:
+        samples = samples[: args.limit]
     results = []
     for s in samples:
         if not os.path.exists(s["image_path"]):
